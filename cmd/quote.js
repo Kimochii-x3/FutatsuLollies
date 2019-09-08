@@ -6,17 +6,19 @@ module.exports = {
   usage: 'fl.quote user @<member>/<USER id> <content> ; fl.quote message <MESSAGE id> /#<channel name>, required only when quoting outside of the channel/',
   args: true,
   async execute(bot, message, args, option) {
-    let mAuthor = message.author.id;
-    let rqUser = message.member;
-    let quoteFrom = message.mentions.members.first();
-    let channelToQuoteFrom = message.mentions.channels.first();
-    let mContent = message.content.split(/\s+/g) //substring(message.content.indexOf(" ")+args0.length+2, message.content.length);
-    //
-    let args1 = mContent[1];
-    let args2 = mContent[2];
-    let args3 = mContent[3];
-    switch (args1)
-    {
+    if (!message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_MESSAGES', 'EMBED_LINKS', true)) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS' perms to my role 'FutatsuLollies'");}
+    else if (message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_MESSAGES', 'EMBED_LINKS', true)) {
+      let mAuthor = message.author.id;
+      let rqUser = message.member;
+      let quoteFrom = message.mentions.members.first();
+      let channelToQuoteFrom = message.mentions.channels.first();
+      let mContent = message.content.split(/\s+/g) //substring(message.content.indexOf(" ")+args0.length+2, message.content.length);
+      //
+      let args1 = mContent[1];
+      let args2 = mContent[2];
+      let args3 = mContent[3];
+      switch (args1)
+      {
       case "user":
         if(quoteFrom)
         {
@@ -141,6 +143,7 @@ module.exports = {
             return message.channel.send(quote);
           }
         }
+    }
     }
   },
 };

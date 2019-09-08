@@ -6,8 +6,8 @@ module.exports = {
   usage: 'fl.color #<hexcode> /provide no hexcode to see your color hexcode or mention someone to see their role hexcode/',
   args: false,
   execute(bot, message, args, option) {
-    if (!message.guild.me.permissions.has('ADMINISTRATOR', true)) {return message.reply("insufficient permissions, add 'ADMINISTRATOR' perms to my role 'FutatsuLollies'");}
-    else if (message.guild.me.permissions.has('ADMINISTRATOR', true)) {
+    if (!message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', 'ADD_REACTIONS', true)) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS + ADD_REACTIONS' perms to my role 'FutatsuLollies'");}
+    else if (message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', 'ADD_REACTIONS', true)) {
       let phC = message.guild.roles.find(role => role.name == "▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇");
       if(!phC){
         try {

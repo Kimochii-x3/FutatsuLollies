@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: 'l',
-  description: 'looks up a user\'s avatar by mentioning them or by their ID',
+  description: 'looks up a user\'s avatar by mentioning them or by their ID /using ID lets you lookup avatars of any member in other servers/',
   usage: 'fl.l avatar/tag @<member>/<member ID>',
   args: true,
   async execute (bot, message, args, option) {

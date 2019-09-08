@@ -11,8 +11,8 @@ module.exports = {
     // const { cmd } = message.client;
     let botOwner = bot.users.get("254349985963835393");
     // data.push('Current commands:\n');
-    data.push('Current commands:\n' + commands.map(command => "**"+command.name+"**"+" **->** "+command.description+" **usage:** "+command.usage).join('\n'));
-    return message.channel.send(data+'\n'+'**Invite link:** https://discordapp.com/oauth2/authorize?client_id=615263043001122817&scope=bot&permissions=8\n**Bot maker: **'+botOwner.tag);
+    data.push('Current commands:\n' + commands.map(command => "**"+command.name+"**"+" **->** "+command.description+"\n**usage:** "+command.usage).join('\n'));
+    return message.channel.send(data+'\n'+'**Invite link:** https://discordapp.com/oauth2/authorize?client_id=615263043001122817&scope=bot&permissions=268462288\n**Bot maker: **'+botOwner.tag);
 
   },
 };
