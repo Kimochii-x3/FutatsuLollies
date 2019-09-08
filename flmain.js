@@ -26,13 +26,20 @@ bot.on("ready", function(){
   var tn = new Date();
   console.log(`${bot.user.username} is online.\n[`+tn.toString()+`]`);
   bot.user.setActivity("fl.help 4 cmds", {type: "PLAYING"});
-  bot.users.get("254349985963835393").send("Up and running\n"+tn.toString());
+  bot.channels.get("618929645173342210").send("Up and running\n"+tn.toString());
+  let guildNames = [];
+  let guildLookups = bot.guilds.map(g => `${g.name} \+ ${g.id}`);
+  for (const g of guildLookups){
+  guildNames.push(g);}
+  // console.log(guildNames);
 });
 bot.on("error", console.error);
 
 bot.on("message", async message =>
 {
   if(message.author.bot) return;
+  if(!message.content.startsWith(prefix)) return;
+  if(message.channel.type === 'dm') return;
   let args = message.content.slice(prefix.length).split(/ +/);
   let cmdName = args.shift().toLowerCase();
   let option = message.content.slice(prefix.length+cmdName.length).split(/-+/);
@@ -62,6 +69,9 @@ bot.on("guildMemberRemove", async member => {});
 bot.on("guildMemberUpdate", async (oldMember, newMember) => {});
 bot.on("messageDelete", async message => {});
 bot.on("voiceStateUpdate", async (oldMember, newMember) => {});
+bot.on("channelCreate", async channel => {});
+bot.on("channelDelete", async channel => {});
+bot.on("channelUpdate", async (oldChannel, newChannel) => {});
 
 
 
