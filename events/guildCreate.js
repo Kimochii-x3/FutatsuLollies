@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, guild) =>
 {
-  if (!guild.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (guild.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!guild.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_CHANNELS', true)) {return;}
+  else if (guild.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_CHANNELS', true)) {
     let logChannel = guild.channels.find(c => c.name === "event-horizon");
     if(!logChannel)
       {

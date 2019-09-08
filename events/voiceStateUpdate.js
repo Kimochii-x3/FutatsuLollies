@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = (bot, oldMember, newMember) =>
 {
-  if (!oldMember.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (oldMember.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!oldMember.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {return;}
+  else if (oldMember.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {
     let newUserChannel = newMember.voiceChannel;
     let oldUserChannel = oldMember.voiceChannel;
     let muteRole = newMember.guild.roles.find(role => role.name === "Axe'd");

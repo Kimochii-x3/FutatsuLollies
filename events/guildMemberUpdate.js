@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, oldMember, newMember) =>
 {
-  if (!oldMember.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (oldMember.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!oldMember.guild.me.permissions.has('SEND_MESSAGES','VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
+  else if (oldMember.guild.me.permissions.has('SEND_MESSAGES','VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
     let mGuild = oldMember.guild;
     let logChannel = mGuild.channels.find(c => c.name === "event-horizon");
     let uTarget = await mGuild.fetchAuditLogs({type: 'MEMBER_ROLE_UPDATE', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.target).then(user => user.id);
@@ -13,6 +13,8 @@ module.exports = async (bot, oldMember, newMember) =>
     let roleDiff1 = oldMember.roles.size;
     let roleDiff2 = newMember.roles.size;
     let roleDiff3 = newMember.guild.roles.find(r => r.name === roleDiff);
+    let oldMemberNick = oldMember.displayName;
+    let newMemberNick = newMember.displayName;
 
     let rChange1 = new Discord.RichEmbed()
     .setDescription(`<@${uTarget}>`+"** was removed from **"+`${roleDiff3}`)
@@ -24,6 +26,10 @@ module.exports = async (bot, oldMember, newMember) =>
     .setColor("#14cdfc")
     .setTimestamp()
 
+    let nickChange = new Discord.RichEmbed()
+    .setDescription(`**${oldMemberNick} changed (or removed) their nickname to ${newMemberNick}**`)
+    .setColor('GREY')
+    .setTimestamp()
     // if(oldMemberRoles != newMemberRoles)
     // {
     if(roleDiff1 > roleDiff2)
@@ -35,6 +41,11 @@ module.exports = async (bot, oldMember, newMember) =>
     {
       if(!logChannel) {return newMember.guild.owner.send(rChange2).catch(console.error);}
       else if(logChannel) {return logChannel.send(rChange2);}
+    }
+    if(oldMemberNick != newMemberNick)
+    {
+      if(!logChannel) {return newMember.guild.owner.send(nickChange).catch(console.error);}
+      else if(logChannel) {return logChannel.send(nickChange);}
     }
   }
   // }

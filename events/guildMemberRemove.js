@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, member) =>
 {
-  if (!member.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (member.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!member.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
+  else if (member.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
     let tempTimestamp = Date.now();
     let logChannel = member.guild.channels.find(c => c.name === "event-horizon");
     let uExecutor = await member.guild.fetchAuditLogs({type: 'MEMBER_KICK', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.executor).then(user => user.tag);

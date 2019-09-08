@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, emoji) =>
 {
-  if (!emoji.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (emoji.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!emoji.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
+  else if (emoji.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
     let eServ = emoji.guild;
     let eDeleter = await eServ.fetchAuditLogs({type: 'EMOJI_DELETE', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.executor).then(user => user.id);
     let eName = emoji.name;

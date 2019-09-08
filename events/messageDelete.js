@@ -2,8 +2,8 @@ const Discord = require("discord.js");
 
 module.exports = (bot, message) =>
 {
-  if (!message.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (message.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  if (!message.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {return;}
+  else if (message.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {
     // if(!message.author.bot || message.author.id != "254349985963835393")
     // {
       // let mGuild = message.guild;
