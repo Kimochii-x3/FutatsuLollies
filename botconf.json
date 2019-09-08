@@ -1,4 +1,4 @@
 {
-  prefix: 'fl.',
-  token: 'your bot token here'
+  "prefix": 'fl.',
+  "token": 'your bot token here'
 }
