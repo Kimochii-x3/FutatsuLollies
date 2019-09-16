@@ -5,7 +5,7 @@ module.exports = {
   description: 'showcases the prefix or changes the prefix',
   usage: 'fl.prefix (to view the prefix) or fl.prefix >new prefix< -set (to set the new prefix)',
   args: false,
-  execute(bot, message, args, option, commands, prefix, db) {
+  execute(bot, message, args, option, commands, prefix) {
     // console.log(option);
     if (!args[0]){
       return message.channel.send("The prefix for this server is: `" + prefix + "`, default prefix is: `fl.`");
@@ -17,7 +17,7 @@ module.exports = {
           else {
             let sql = `UPDATE serverInfo SET prefix = '${args[0]}' WHERE serverID = ${message.guild.id}`
             // console.log(sql);
-            db.query(sql);
+            bot.db.query(sql);
             message.channel.send(`Successfully changed the prefix to \`${args[0]}\``)
           }
         }
