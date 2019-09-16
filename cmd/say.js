@@ -6,8 +6,8 @@ module.exports = {
   usage: 'fl.say <content> /optional to make it an embed add \'-e\' at the end/',
   args: true,
   execute(bot, message, args, option) {
-    let mAPC = message.member.permissions.has('MANAGE_MESSAGES', true);
-    let bAPC = message.guild.me.permissions.has('SEND_MESSAGES','MANAGE_MESSAGES', 'EMBED_LINKS', true);
+    let mAPC = message.member.permissions.has(['MANAGE_MESSAGES'], true);
+    let bAPC = message.guild.me.permissions.has(['SEND_MESSAGES','MANAGE_MESSAGES', 'EMBED_LINKS'], true);
     if(mAPC && bAPC){
       if(!option[1]){
         // console.log(option[1]);

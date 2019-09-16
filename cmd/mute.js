@@ -3,12 +3,13 @@ const ms = require("ms");
 
 module.exports = {
   name: 'mute',
-  description: 'mutes a member from chat & voice channels, also if a muted user VC they\'ll be muted from it too',
+  description: 'mutes a member from chat & voice channels, also if a muted user VC they\'ll be muted from it too, if the bot responds with ✅ but the user doesn\'t get muted, move the bot\'s role above any other role in the hierarchy',
   usage: 'fl.mute @<member> /30s, 5m, 1d/(any time combination should be possible as long as it doesnt exceed 24 days limit)',
   args: true,
   async execute(bot, message, args, option) {
-    if (!message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', true)) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS' perms to my role 'FutatsuLollies'");}
-    else if (message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', true)) {
+    let botPerms = message.guild.me.permissions.has(['SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS'], true);
+    if (!botPerms) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS' perms to my role 'FutatsuLollies'");}
+    else if (botPerms) {
       let muteRole = message.guild.roles.find(role => role.name == "Axe'd");
       let mutedUser = message.mentions.members.first();
       let muteTime = args[1];

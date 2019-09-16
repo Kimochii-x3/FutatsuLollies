@@ -3,11 +3,12 @@ const Discord = require("discord.js");
 module.exports = {
   name: 'quote',
   description: 'quotes a user, you can make fake quotes or real ones (real ones include "Jump to message")',
-  usage: 'fl.quote user @<member>/<USER id> <content> ; fl.quote message <MESSAGE id> /#<channel name>, required only when quoting outside of the channel/',
+  usage: 'fl.quote user @\'member\'/\'USER id\' \'content\' ; fl.quote message /#\'channel name\', required only when quoting outside of the channel/ \'MESSAGE id\' ',
   args: true,
   async execute(bot, message, args, option) {
-    if (!message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_MESSAGES', 'EMBED_LINKS', true)) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS' perms to my role 'FutatsuLollies'");}
-    else if (message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_MESSAGES', 'EMBED_LINKS', true)) {
+    let botPerms = message.guild.me.permissions.has(['SEND_MESSAGES', 'MANAGE_MESSAGES', 'EMBED_LINKS'], true);
+    if (!botPerms) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS' perms to my role 'FutatsuLollies'");}
+    else if (botPerms) {
       let mAuthor = message.author.id;
       let rqUser = message.member;
       let quoteFrom = message.mentions.members.first();

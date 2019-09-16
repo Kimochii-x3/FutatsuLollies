@@ -2,12 +2,13 @@ const Discord = require("discord.js");
 
 module.exports = {
   name: 'color',
-  description: 'creates a color role for yourself, works only with servers that have roles with the "default" color',
+  description: 'creates a color role for yourself, works only with servers that have roles with the "default" color, also if the creator of the role leaves the server the role (if it exists) will be deleted',
   usage: 'fl.color #<hexcode> /provide no hexcode to see your color hexcode or mention someone to see their role hexcode/',
   args: false,
   execute(bot, message, args, option) {
-    if (!message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', 'ADD_REACTIONS', true)) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS + ADD_REACTIONS' perms to my role 'FutatsuLollies'");}
-    else if (message.guild.me.permissions.has('SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', 'ADD_REACTIONS', true)) {
+    let botPerms = message.guild.me.permissions.has(['SEND_MESSAGES', 'MANAGE_ROLES', 'EMBED_LINKS', 'ADD_REACTIONS'], true);
+    if (!botPerms) {return message.reply("insufficient permissions, add 'SEND_MESSAGES + MANAGE_ROLES + EMBED_LINKS + ADD_REACTIONS' perms to my role 'FutatsuLollies'");}
+    else if (botPerms) {
       let phC = message.guild.roles.find(role => role.name == "▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇");
       if(!phC){
         try {
