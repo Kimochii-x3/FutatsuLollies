@@ -21,9 +21,14 @@ fs.readdir(__dirname+'/events', (err, files) => {
     bot.on(eventName, event.bind(null, bot));
   })
 });
+bot.db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "hYwYdrAwAbOwOlt",
+  database: "flserv"
+});
 
-
-db.connect(err =>{
+bot.db.connect(err =>{
   if(err) return console.log(err);
   console.log('DB connected');
 });
@@ -54,7 +59,7 @@ bot.on("error", console.error);
 
 bot.on("message", async message =>
 {
-  db.query(`SELECT prefix FROM serverInfo WHERE serverID = ${message.guild.id}`, (err, rows) => {
+  bot.db.query(`SELECT prefix FROM serverInfo WHERE serverID = ${message.guild.id}`, (err, rows) => {
     if (err) throw err;
     let prefix = rows[0].prefix;
     // console.log(prefix1);
@@ -71,7 +76,7 @@ bot.on("message", async message =>
          return message.channel.send('No args provided');
        }
        else {
-         cmd.execute(bot, message, args, option, commands, prefix, db);
+         cmd.execute(bot, message, args, option, commands, prefix);
        }
     } catch (error) {
       console.error(error);
@@ -86,7 +91,7 @@ bot.on("message", async message =>
 // bot.on("debug", m => console.log(m));
 bot.on("guildCreate", async guild => {
   // console.log(guild);
-  db.query(`SELECT * FROM serverInfo WHERE serverID = '${guild.id}'`, (err, rows) => {
+  bot.db.query(`SELECT * FROM serverInfo WHERE serverID = '${guild.id}'`, (err, rows) => {
     if (err) return console.log(err);
     let sql;
     // let serverIDexists = `SELECT EXISTS(SELECT * FROM serverInfo WHERE serverID=${guild.id})`;
@@ -95,7 +100,7 @@ bot.on("guildCreate", async guild => {
       sql = `INSERT INTO serverInfo (serverID) VALUES ('${guild.id}')`
     }
     // if (sql = null) {return;}
-    db.query(sql, console.log);
+    bot.db.query(sql, console.log);
   });
 });
 bot.on("emojiCreate", async emoji => {});
