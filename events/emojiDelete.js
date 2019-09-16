@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, emoji) =>
 {
-  if (!emoji.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
-  else if (emoji.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
+  let botPerms = emoji.guild.me.permissions.has(['SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     let eServ = emoji.guild;
     let eDeleter = await eServ.fetchAuditLogs({type: 'EMOJI_DELETE', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.executor).then(user => user.id);
     let eName = emoji.name;
@@ -14,7 +15,13 @@ module.exports = async (bot, emoji) =>
     .setColor("#ff3a28")
     .setTimestamp()
 
-    if(!logChannel) {eServ.owner.send(eDeleted).catch(console.error)}
+    if(!logChannel) {
+      try {
+        eServ.guild.owner.send(embed);
+      } catch (e) {
+        return;
+      }
+    }
     else if (logChannel) {
         return logChannel.send(eDeleted);
     }

@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, member) =>
 {
-  if (!member.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
-  else if (member.guild.me.permissions.has('SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
+  let botPerms = member.guild.me.permissions.has(['SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     let tempTimestamp = Date.now();
     let logChannel = member.guild.channels.find(c => c.name === "event-horizon");
     let uExecutor = await member.guild.fetchAuditLogs({type: 'MEMBER_KICK', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.executor).then(user => user.tag);
@@ -28,20 +29,38 @@ module.exports = async (bot, member) =>
       if(uTarget2 != member.id)
       {
         if(userRole){userRole.delete('Member '+memberLeft+' left the server');}
-        if(!logChannel) {return member.guild.owner.send(memberLeave).catch(console.error);}
+        if(!logChannel) {
+          try {
+            member.guild.owner.send(embed);
+          } catch (e) {
+            return;
+          }
+        }
         else if(logChannel) {return logChannel.send(memberLeave);}
       }
       else(uTarget2 == member.id)
       {
         if(userRole){userRole.delete('Member '+memberLeft+' was kicked from the server');}
-        if(!logChannel) {return member.guild.owner.send(memberKick).catch(console.error);}
+        if(!logChannel) {
+          try {
+            member.guild.owner.send(embed);
+          } catch (e) {
+            return;
+          }
+        }
         else if(logChannel) {return logChannel.send(memberKick);}
       }
     }
     else if(tempTimestamp >= aLogTimestamp+50000)
     {
     if(userRole){userRole.delete('Member '+memberLeft+' left the server');}
-    if(!logChannel) {return member.guild.owner.send(memberLeave).catch(console.error);}
+    if(!logChannel) {
+      try {
+        member.guild.owner.send(embed);
+      } catch (e) {
+        return;
+      }
+    }
     else if(logChannel) {return logChannel.send(memberLeave);}
   }
   }

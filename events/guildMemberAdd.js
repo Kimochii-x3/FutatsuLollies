@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, member) =>
 {
-  if (!member.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {return;}
-  else if (member.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {
+  let botPerms = member.guild.me.permissions.has(['SEND_MESSAGES', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     let logChannel = member.guild.channels.find(c => c.name === "event-horizon");
 
     let memberJoin = new Discord.RichEmbed()
@@ -11,7 +12,13 @@ module.exports = async (bot, member) =>
     .setColor("GREEN")
     .setTimestamp()
 
-    if(!logChannel) {return member.guild.owner.send(memberJoin).catch(console.error);}
+    if(!logChannel) {
+      try {
+        member.guild.owner.send(embed);
+      } catch (e) {
+        return;
+      }
+    }
     else if(logChannel) {return logChannel.send(memberJoin);}
 
   }

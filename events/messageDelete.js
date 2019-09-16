@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 
-module.exports = (bot, message) =>
+module.exports = async (bot, message) =>
 {
-  if (!message.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {return;}
-  else if (message.guild.me.permissions.has('SEND_MESSAGES', 'EMBED_LINKS', true)) {
+  let botPerms = message.guild.me.permissions.has(['SEND_MESSAGES', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     // if(!message.author.bot || message.author.id != "254349985963835393")
     // {
       // let mGuild = message.guild;
@@ -23,7 +24,13 @@ module.exports = (bot, message) =>
         .setTimestamp()
         .setFooter("Author: "+mAuthor.id+" & Message ID: "+mID)
 
-        if(!logChannel) {return message.guild.owner.send(mDelete).catch(console.error);}
+        if(!logChannel) {
+          try {
+            message.guild.owner.send(embed);
+          } catch (e) {
+            return;
+          }
+        }
         else if(logChannel) {return logChannel.send(mDelete);}
       }
       else if(mFiles.length >= 1)
@@ -41,7 +48,13 @@ module.exports = (bot, message) =>
             .setImage(msg.toString())
             .setFooter("Author: "+mAuthor.id+" & Message ID: "+mID)
 
-            if(!logChannel) {return message.guild.owner.send(mDelete).catch(console.error);}
+            if(!logChannel) {
+              try {
+                message.guild.owner.send(embed);
+              } catch (e) {
+                return;
+              }
+            }
             else if(logChannel) {return logChannel.send(mDelete);}
           }
           else
@@ -53,7 +66,13 @@ module.exports = (bot, message) =>
             .setTimestamp()
             .setFooter("Author: "+mAuthor.id+" & Message ID: "+mID)
 
-            if(!logChannel) {return message.guild.owner.send(mDelete).catch(console.error);}
+            if(!logChannel) {
+              try {
+                message.guild.owner.send(embed);
+              } catch (e) {
+                return;
+              }
+            }
             else if(logChannel) {return logChannel.send(mDelete);}
           }
         });

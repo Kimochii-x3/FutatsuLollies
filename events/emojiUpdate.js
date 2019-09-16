@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, oldEmoji, newEmoji) =>
 {
-  if (!newEmoji.guild.me.permissions.has('ADMINISTRATOR', true)) {return;}
-  else if (newEmoji.guild.me.permissions.has('ADMINISTRATOR', true)) {
+  let botPerms = newEmoji.guild.me.permissions.has(['SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     let eServ = newEmoji.guild;
     let eUpdater = await eServ.fetchAuditLogs({type: 'EMOJI_UPDATE', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.executor).then(user => user.id);
     let eNameOld = oldEmoji.name;
@@ -15,7 +16,13 @@ module.exports = async (bot, oldEmoji, newEmoji) =>
     .setColor("#2381ee")
     .setTimestamp()
 
-    if(!logChannel) {eServ.owner.send(eUpdated).catch(console.error)}
+    if(!logChannel) {
+      try {
+        eServ.guild.owner.send(embed);
+      } catch (e) {
+        return;
+      }
+    }
     else if (logChannel) {
         return logChannel.send(eUpdated);
     }

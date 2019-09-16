@@ -2,8 +2,9 @@ const Discord = require("discord.js");
 
 module.exports = async (bot, oldMember, newMember) =>
 {
-  if (!oldMember.guild.me.permissions.has('SEND_MESSAGES','VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {return;}
-  else if (oldMember.guild.me.permissions.has('SEND_MESSAGES','VIEW_AUDIT_LOG', 'EMBED_LINKS', true)) {
+  let botPerms = oldMember.guild.me.permissions.has(['SEND_MESSAGES', 'VIEW_AUDIT_LOG', 'EMBED_LINKS'], true);
+  if (!botPerms) {return;}
+  else if (botPerms) {
     let mGuild = oldMember.guild;
     let logChannel = mGuild.channels.find(c => c.name === "event-horizon");
     let uTarget = await mGuild.fetchAuditLogs({type: 'MEMBER_ROLE_UPDATE', limit: 1}).then(aLog => aLog.entries.first()).then(aLog2 => aLog2.target).then(user => user.id);
@@ -34,17 +35,35 @@ module.exports = async (bot, oldMember, newMember) =>
     // {
     if(roleDiff1 > roleDiff2)
     {
-      if(!logChannel) {return newMember.guild.owner.send(rChange1).catch(console.error);}
+      if(!logChannel) {
+        try {
+          newMember.guild.owner.send(embed);
+        } catch (e) {
+          return;
+        }
+      }
       else if(logChannel) {return logChannel.send(rChange1);}
     }
     else if(roleDiff1 < roleDiff2)
     {
-      if(!logChannel) {return newMember.guild.owner.send(rChange2).catch(console.error);}
+      if(!logChannel) {
+        try {
+          newMember.guild.owner.send(embed);
+        } catch (e) {
+          return;
+        }
+      }
       else if(logChannel) {return logChannel.send(rChange2);}
     }
     if(oldMemberNick != newMemberNick)
     {
-      if(!logChannel) {return newMember.guild.owner.send(nickChange).catch(console.error);}
+      if(!logChannel) {
+        try {
+          newMember.guild.owner.send(embed);
+        } catch (e) {
+          return;
+        }
+      }
       else if(logChannel) {return logChannel.send(nickChange);}
     }
   }
