@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const ms = require("ms");
 
-module.exports = async (bot, message, db) =>
+module.exports = async (bot, message) =>
 {
   // if(message.guild.id == 622120423076790303){
   // db.query(`SELECT prefix FROM serverInfo WHERE serverID = ${message.guild.id}`, (err, rows) => {
