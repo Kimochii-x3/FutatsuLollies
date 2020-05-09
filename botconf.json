@@ -1,4 +1,10 @@
+// entry is ("key name": "value")
 {
   "prefix": "fl.",
-  "token": "your bot token here"
+  "token": "your bot token here",
+  "pls_fuck": "<IP>",     // ip is required, can be localhost or external/internal ip for mysql server database
+  "me_hard": "<USER>",    // user is required
+  "daddy": "<PASSWORD>",  // password is required
+  "hydrabolt": "<PORT>",  // port is required
+  "uwu": "<DATABASE>"     // database is optional
 }
