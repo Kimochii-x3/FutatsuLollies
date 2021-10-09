@@ -1,3 +1,4 @@
+# The first make of the bot in v 11.6.4 of Discord.js, this is forgotten, look for FutatsuLollies_DJS repo
 # FutatsuLollies
 muh discord.js based discord bot's code </br>
 muh loicense is: </br>
